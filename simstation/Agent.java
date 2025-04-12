@@ -3,7 +3,7 @@ package simstation;
 import java.io.Serializable;
 
 abstract class Agent implements Runnable, Serializable {
-    World world;
+    protected World world;
     private int xc;         // >= 0
     private int yc;         // <= world size
     private boolean paused = true;
@@ -11,22 +11,44 @@ abstract class Agent implements Runnable, Serializable {
     private String agentName;
     private Thread myThread;
 
-    abstract void start();
-    abstract void stop();
-    abstract void pause();
-    abstract void resume();
-    void update() {
-        Agent other = world.getNeighbor(this, 100);
-        facilitator.send(other, new Message("name?"));
-        Thread.sleep(1000);
-        Message msg = mailBox.poll();
-        facilitator.send(other, new Message("hello " + msg.content));
+    public void start() {
+        paused = false;
+        stopped = false;
+        run();
     }
-    abstract boolean done();
+    public void stop() {
+        stopped = true;
+    }
+    public void pause() {
+        paused = true;
+    }
+    public void resume() {
+        paused = false;
+    }
+    abstract void update(); // override this
+    public boolean done() {
+        return stopped;
+    }
     public void run() {
         while(!done()) {
             update();
             Thread.yield();
         }
+    }
+
+    public int getXc() {
+        return xc;
+    }
+
+    public int getYc() {
+        return yc;
+    }
+
+    public void setXc(int xc) {
+        this.xc = xc;
+    }
+
+    public void setYc(int yc) {
+        this.yc = yc;
     }
 }

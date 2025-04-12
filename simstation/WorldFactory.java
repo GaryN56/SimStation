@@ -8,7 +8,12 @@ import mvc.View;
 public class WorldFactory implements AppFactory {
     @Override
     public Model makeModel() {
-        return new World();
+        return new World() {
+
+            @Override
+            public void populate() {
+            }
+        };
     }
 
     @Override

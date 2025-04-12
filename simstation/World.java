@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class World extends Model {
+public abstract class World extends Model {
     private List<Agent> agents = new ArrayList<>();
     private final int SIZE = 500;
     private int alive = 0;
@@ -20,6 +20,7 @@ public class World extends Model {
     }
 
     public void startAgents() {
+        populate();
         for(Agent a : agents) {
             a.start();
         }
@@ -43,12 +44,10 @@ public class World extends Model {
         }
     }
 
-    public void populate() {
-
-    }
+    public abstract void populate();
 
     public String getStatus() {
-
+        return "";
     }
 
     public void updateStatistics() {
@@ -56,7 +55,12 @@ public class World extends Model {
     }
 
     public Agent getNeighbor(Agent a, int radius) {
-
+        for(Agent other : agents) {
+            if(Math.abs(other.getXc() - a.getXc()) < radius || Math.abs(other.getYc() - a.getYc()) < radius) {
+                return other;
+            }
+        }
+        return null;
     }
 
     // required for w.iterator() in worldpanel to work

@@ -3,11 +3,14 @@ package simstation;
 import mvc.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.*;
 
 public class WorldPanel extends AppPanel {
 
     public JPanel threadPanel = new JPanel();
+    protected World world;
+    protected WorldView worldView;
 
     public WorldPanel(WorldFactory factory) {
         super(factory);
@@ -68,6 +71,23 @@ public class WorldPanel extends AppPanel {
             t.start();
         }
     }
-
-
+    public void buttons(ActionEvent ae) {
+        String cmmd = ae.getActionCommand();
+        try {
+            switch (cmmd) {
+                case "Start":
+                    world.startAgents();
+                case "Pause":
+                    world.pauseAgents();
+                case "Resume":
+                    world.resumeAgents();
+                case "Stop":
+                    world.stopAgents();
+                case "Stats":
+                    world.getStatus();
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+    }
 }

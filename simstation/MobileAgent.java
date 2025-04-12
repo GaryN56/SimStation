@@ -1,38 +1,18 @@
 package simstation;
 
 public class MobileAgent extends Agent {
-    Heading heading;
+    protected Heading heading;
 
     @Override
-    void start() {
+    void update() {
 
     }
 
-    @Override
-    void stop() {
+    public void move(int steps) {
 
     }
 
-    @Override
-    void pause() {
-
-    }
-
-    @Override
-    void resume() {
-
-    }
-
-    @Override
-    boolean done() {
-        return false;
-    }
-
-    void move(int steps) {
-
-    }
-
-    void turn(Heading dir) {
+    public void turn(Heading dir) {
 
     }
 }
