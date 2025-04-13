@@ -1,22 +1,27 @@
 package simstation;
 
 import mvc.*;
+
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.*;
 
 public class WorldPanel extends AppPanel {
 
+
+    //private Timer timer;
     public JPanel threadPanel = new JPanel();
-    protected World world;
-    protected WorldView worldView;
 
     public WorldPanel(WorldFactory factory) {
+
         super(factory);
+
+
 
         threadPanel.setLayout(new GridLayout(1, 5));
         threadPanel.setOpaque(false);
+
 
         JPanel p = new JPanel();
         p.setOpaque(false);
@@ -27,7 +32,7 @@ public class WorldPanel extends AppPanel {
 
         p = new JPanel();
         p.setOpaque(false);
-        button = new JButton("Pause");
+        button = new JButton("Suspend");
         button.addActionListener(this);
         p.add(button);
         threadPanel.add(p);
@@ -59,35 +64,31 @@ public class WorldPanel extends AppPanel {
         p.setOpaque(false);
         p.add(threadPanel);
 
+
+        //controlPanel.add(threadPanel, BorderLayout.NORTH);
         controlPanel.add(p,  BorderLayout.NORTH);
+        //makeControlPanel();
+        //this.setPreferredSize(this.getPreferredSize());
+        //frame.setSize(frame.getPreferredSize());
     }
+
+
 
     public void setModel(Model m) {
         super.setModel(m);
-        World w = (World) m;
+        World w = (World)m;
         Iterator<Agent> it = w.iterator();
         while(it.hasNext()) {
             Thread t = new Thread(it.next());
             t.start();
         }
     }
-    public void buttons(ActionEvent ae) {
-        String cmmd = ae.getActionCommand();
-        try {
-            switch (cmmd) {
-                case "Start":
-                    world.startAgents();
-                case "Pause":
-                    world.pauseAgents();
-                case "Resume":
-                    world.resumeAgents();
-                case "Stop":
-                    world.stopAgents();
-                case "Stats":
-                    world.getStatus();
-            }
-        } catch (Exception e) {
-            handleException(e);
-        }
+
+//    protected View getView(Model model) { return new WorldView(model); }
+
+    public void update() {
+//         repaint();
     }
+
+
 }

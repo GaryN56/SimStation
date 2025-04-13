@@ -2,19 +2,24 @@ package simstation;
 
 import java.io.Serializable;
 
-abstract class Agent implements Runnable, Serializable {
+public abstract class Agent implements Runnable, Serializable {
     protected World world;
-    private int xc;         // >= 0
-    private int yc;         // <= world size
-    private boolean paused = true;
-    private boolean stopped = false;
-    private String agentName;
-    private Thread myThread;
+    protected int xc;         // >= 0
+    protected int yc;         // <= world size
+    protected boolean paused = false;
+    protected boolean stopped = false;
+    protected String agentName;
+    transient protected Thread myThread;
 
+
+    public void setWorld(World w) {
+        this.world = w;
+    }
     public void start() {
         paused = false;
         stopped = false;
-        run();
+        myThread = new Thread(this);
+        myThread.start();
     }
     public void stop() {
         stopped = true;
@@ -26,15 +31,26 @@ abstract class Agent implements Runnable, Serializable {
         paused = false;
     }
     abstract void update(); // override this
+    protected void onStart() {}
+    protected void onInterrupted() {}
+    public void onExit() {}
     public boolean done() {
         return stopped;
     }
     public void run() {
-        while(!done()) {
-            update();
-            Thread.yield();
+        onStart();
+        try {
+            while (!stopped && !paused) {
+                update();
+                Thread.sleep(20);
+            }
+        } catch (InterruptedException e) {
+            onInterrupted();
+        } finally {
+            onExit();
         }
     }
+
 
     public int getXc() {
         return xc;

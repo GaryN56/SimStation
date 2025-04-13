@@ -1,21 +1,25 @@
 package simstation;
 
-import mvc.Model;
-import mvc.View;
-
+import mvc.*;
 import java.awt.*;
 
 public class WorldView extends View {
-    World w;
-
     public WorldView(Model m) {
-        super(m); // dk wat this does, intellij told me to add it
-        w = (World) m;
-        repaint();
+        super(m);
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    @Override
+    public void paintComponent(Graphics gc) {
+        super.paintComponent(gc);
+        World world = (World) model;
 
+        for (Agent a : world.agents) {
+            drawAgent(a, gc);
+        }
+    }
+
+    public void drawAgent(Agent a, Graphics gc) {
+        gc.setColor(Color.RED);
+        gc.fillOval(a.xc - 5, a.yc - 5, 10, 10);
     }
 }

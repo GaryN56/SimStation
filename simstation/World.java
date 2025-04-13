@@ -1,22 +1,23 @@
 package simstation;
 
-import mvc.Model;
+import mvc.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public abstract class World extends Model {
-    private List<Agent> agents = new ArrayList<>();
-    private final int SIZE = 500;
-    private int alive = 0;
-
-    public World() {
-
-    }
+    protected List<Agent> agents = new ArrayList<>();
+    protected static final int SIZE = 500;
+    protected int alive = 0;
+    protected int clock = 0;
 
     public void addAgent(Agent a) {
         agents.add(a);
+        alive++;
+        a.setWorld(this);
+        a.setXc(Utilities.rng.nextInt(SIZE));
+        a.setYc(Utilities.rng.nextInt(SIZE));
     }
 
     public void startAgents() {
@@ -47,10 +48,11 @@ public abstract class World extends Model {
     public abstract void populate();
 
     public String getStatus() {
-        return "";
+        return ("Clock: " + clock + " Alive Agents: " + alive + " Total Agents: " + agents.size());
     }
 
     public void updateStatistics() {
+        clock++;
 
     }
 
