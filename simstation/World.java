@@ -21,6 +21,7 @@ public abstract class World extends Model {
     }
 
     public void startAgents() {
+        agents.clear();
         populate();
         for(Agent a : agents) {
             a.start();

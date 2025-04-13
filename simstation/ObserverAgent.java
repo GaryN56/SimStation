@@ -4,7 +4,7 @@ public class ObserverAgent extends Agent {
 
 
     @Override
-    void update() {
+    public void update() {
         world.updateStatistics();
         try {
             Thread.sleep(100);

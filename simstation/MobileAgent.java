@@ -4,7 +4,7 @@ public class MobileAgent extends Agent {
     protected Heading heading;
 
     @Override
-    void update() {
+    public void update() {
     }
 
     public void move(int steps) {

@@ -30,7 +30,7 @@ public abstract class Agent implements Runnable, Serializable {
     public void resume() {
         paused = false;
     }
-    abstract void update(); // override this
+    public abstract void update(); // override this
     protected void onStart() {}
     protected void onInterrupted() {}
     public void onExit() {}
