@@ -58,7 +58,7 @@ public abstract class World extends Model {
 
     public Agent getNeighbor(Agent a, int radius) {
         for(Agent other : agents) {
-            if(Math.abs(other.getXc() - a.getXc()) < radius || Math.abs(other.getYc() - a.getYc()) < radius) {
+            if((other != a) && (Math.abs(other.getXc() - a.getXc()) < radius || Math.abs(other.getYc() - a.getYc()) < radius)) {
                 return other;
             }
         }

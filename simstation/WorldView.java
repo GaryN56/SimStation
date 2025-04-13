@@ -8,6 +8,7 @@ public class WorldView extends View {
         super(m);
     }
 
+
     @Override
     public void paintComponent(Graphics gc) {
         super.paintComponent(gc);
