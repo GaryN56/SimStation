@@ -1,8 +1,13 @@
 package simstation;
 
 public class ObserverAgent extends Agent {
+
+    public ObserverAgent() {
+        super();
+    }
+
     @Override
-    void update() {
+    public void update() {
         world.updateStatistics();
     }
 }

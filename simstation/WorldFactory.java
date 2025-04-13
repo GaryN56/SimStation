@@ -24,7 +24,7 @@ public class WorldFactory implements AppFactory {
     @Override
     public String[] getEditCommands() {
         return new String[0];
-    }
+    } // commands from buttons
 
     @Override
     public Command makeEditCommand(Model model, String type, Object source) {

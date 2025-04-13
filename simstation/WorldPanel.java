@@ -71,23 +71,39 @@ public class WorldPanel extends AppPanel {
             t.start();
         }
     }
-    public void buttons(ActionEvent ae) {
-        String cmmd = ae.getActionCommand();
+    public void actionPerformed(ActionEvent ae) {
         try {
+            String cmmd = ae.getActionCommand();
+            Command exec = null;
             switch (cmmd) {
                 case "Start":
-                    world.startAgents();
+                    exec = new StartCommand(model);
+                    break;
                 case "Pause":
-                    world.pauseAgents();
+                    exec = new SuspendCommand(model);
+                    break;
                 case "Resume":
-                    world.resumeAgents();
+                    exec = new ResumeCommand(model);
+                    break;
                 case "Stop":
-                    world.stopAgents();
+                    exec = new StopCommand(model);
+                    break;
                 case "Stats":
-                    world.getStatus();
+                    exec = new StatsCommand(model);
+                    break;
+            }
+            if (exec != null) {
+                exec.execute();
             }
         } catch (Exception e) {
             handleException(e);
         }
+        super.actionPerformed(ae);
     }
+
+    //protected View getView(Model model) { return new SimulationView(model); }
+
+//    public void update() {
+//        repaint();
+//    }
 }

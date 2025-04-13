@@ -8,11 +8,11 @@ import java.util.List;
 
 public abstract class World extends Model {
     private List<Agent> agents = new ArrayList<>();
-    private final int SIZE = 500;
+    protected static final int SIZE = 500;
     private int alive = 0;
 
     public World() {
-
+        populate();
     }
 
     public void addAgent(Agent a) {
@@ -22,6 +22,8 @@ public abstract class World extends Model {
     public void startAgents() {
         populate();
         for(Agent a : agents) {
+            Thread thread = new Thread(a);
+            thread.start();
             a.start();
         }
     }
@@ -46,12 +48,16 @@ public abstract class World extends Model {
 
     public abstract void populate();
 
-    public String getStatus() {
-        return "";
+    public String getStatus() { // need to fix, should say if agent is alive or dead
+        return "#agents = " + agents.size() + "\nliving = " + alive;
     }
 
-    public void updateStatistics() {
+    public void updateStatistics() { // this one should be the one that updates the stats menu popup
 
+    }
+
+    public List<Agent> getAgents() {
+        return agents;
     }
 
     public Agent getNeighbor(Agent a, int radius) {
@@ -67,5 +73,9 @@ public abstract class World extends Model {
     // diagram on hw page doesnt have this
     public Iterator<Agent> iterator() {
         return agents.iterator();
+    }
+
+    public int getSize() {
+        return SIZE;
     }
 }
