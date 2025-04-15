@@ -13,7 +13,9 @@ public class PlagueView extends WorldView {
         PlagueSimulation plague = (PlagueSimulation) model;
 
         for (Agent a : plague.agents) {
-            drawHost((Host) a, gc);
+            if (a instanceof Host) {
+                drawHost((Host) a, gc);
+            }
         }
     }
     public void drawHost(Host h, Graphics gc) {

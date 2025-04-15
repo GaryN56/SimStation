@@ -10,6 +10,9 @@ public class PlagueSimulation extends World {
 
     public static boolean FATAL = false;    // if virus is fatal or not
     public static int INFECTION_LENGTH = 200;    // Length of time to recover or die from virus
+    public int aliveAmount;
+    public int deadAmount;
+    public int infectedAmount;
 
     @Override
     public void populate() {
@@ -29,7 +32,30 @@ public class PlagueSimulation extends World {
     public static void setInfectionLength(int input) { INFECTION_LENGTH = input; }
 
     @Override
+    public void updateStatistics() {
+        super.updateStatistics();
+        aliveAmount = 0;
+        deadAmount = 0;
+        for (Agent a : agents) {
+            if (a instanceof Host h) {
+                if (!h.isAlive()) {             //Increment dead counter if agent is dead
+                    deadAmount++;
+                } else if (h.isInfected()){     //Increment infected and alive counter if agent is infected
+                    infectedAmount++;
+                    aliveAmount++;
+                } else {                        //Increment alive counter if alive and not infected
+                    aliveAmount++;
+                }
+            }
+        }
+
+    }
+
+    @Override
     public String getStatus() {
-        return "Temp";
+        int mobileAgentsAmount = agents.size() - 1;
+        int percentInfected = infectedAmount / aliveAmount;
+        return "# of Agents" + mobileAgentsAmount + "\n Clock: " + CLOCK + "\n % infected: " + percentInfected
+                + "\n Alive: " + aliveAmount + "\n Infected: " + infectedAmount + "\n Dead: " + deadAmount;
     }
 }

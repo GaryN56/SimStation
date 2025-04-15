@@ -55,7 +55,7 @@ public class Host extends MobileAgent {
             }
 
             heading = Heading.random();
-            move(1);
+            move(3);
         }
     }
 }

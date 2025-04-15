@@ -15,7 +15,7 @@ public class PlagueFactory extends WorldFactory {
 
     @Override
     public String[] getEditCommands() {
-        return new String[] {"Start", "Stop", "Suspend", "Resume", "Stats", "Initial % infected",
+        return new String[] {"Start", "Stop", "Suspend", "Resume", "Stats", "Initial % Infected",
         "Infection Probability", "Initial Population Size", "Fatality/Recovery Time"};
     }
 
