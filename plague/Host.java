@@ -16,6 +16,7 @@ public class Host extends MobileAgent {
 
     public void setInfected(boolean infected) {
         this.infected = infected;
+        if (infected) timeInfected = PlagueSimulation.CLOCK;
     }
     public boolean isInfected() {
         return this.infected;
@@ -26,12 +27,14 @@ public class Host extends MobileAgent {
     // If host is infected, it will try to infect its neighbor
     public void infect() {
         Host partner = (Host) world.getNeighbor(this,10);
-        if (this.isInfected() && !partner.isInfected()) {       // If this agent is infected and partner is not infected
-            int luck = Utilities.rng.nextInt(100);       // Get a random integer 0-100
-            if (luck <= PlagueSimulation.VIRULENCE) {           // If random integer is less than the chance of getting infected
-                luck = Utilities.rng.nextInt(100);        // Roll for another random integer
-                if (luck > PlagueSimulation.RESISTANCE) {       // If roll is greater than resistance %, infect them
-                    partner.setInfected(true);
+        if (partner != null) {
+            if (this.isInfected() && !partner.isInfected()) {       // If this agent is infected and partner is not infected
+                int luck = Utilities.rng.nextInt(100);       // Get a random integer 0-100
+                if (luck <= PlagueSimulation.VIRULENCE) {           // If random integer is less than the chance of getting infected
+                    luck = Utilities.rng.nextInt(100);        // Roll for another random integer
+                    if (luck > PlagueSimulation.RESISTANCE) {       // If roll is greater than resistance %, infect them
+                        partner.setInfected(true);
+                    }
                 }
             }
         }
@@ -44,13 +47,14 @@ public class Host extends MobileAgent {
             // If infected, will try to infect neighbor. Does nothing if host is not infected
             this.infect();
 
-            int time = World.CLOCK - timeInfected;
-
-            if (time >= PlagueSimulation.INFECTION_LENGTH) {
-                if (PlagueSimulation.FATAL) {
-                    this.setDead();
-                } else {
-                    this.setInfected(false);
+            if (this.isInfected()) {
+                int time = World.CLOCK - timeInfected;
+                if (time >= PlagueSimulation.INFECTION_LENGTH) {
+                    if (PlagueSimulation.FATAL) {
+                        this.setDead();
+                    } else {
+                        this.setInfected(false);
+                    }
                 }
             }
 
