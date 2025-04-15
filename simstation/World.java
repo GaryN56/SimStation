@@ -8,21 +8,27 @@ import java.util.List;
 
 public abstract class World extends Model {
     public List<Agent> agents = new ArrayList<>();
-    protected static final int SIZE = 500;
+    public static final int SIZE = 500;
     public static int CLOCK = 0;
-    protected int alive = 0;
+    public int alive = 0;
 
     public void addAgent(Agent a) {
         agents.add(a);
         alive++;
+
         a.setWorld(this);
         a.setXc(Utilities.rng.nextInt(SIZE));
         a.setYc(Utilities.rng.nextInt(SIZE));
     }
 
     public void startAgents() {
-        agents.clear();
-        populate();
+        agents.clear();                     // Clear current agents
+        populate();                         // Populate with new agents
+
+        ObserverAgent o = new ObserverAgent();  // Make a new ObserverAgent
+        agents.add(o);    // Add ObserverAgent to keep tabs on world
+        o.setWorld(this);
+
         for(Agent a : agents) {
             a.start();
         }
@@ -49,12 +55,13 @@ public abstract class World extends Model {
     public abstract void populate();
 
     public String getStatus() {
-        return ("Clock: " + CLOCK + " Alive Agents: " + alive + " Total Agents: " + agents.size());
+        // Subtract ObserverAgent from the amount of total agents
+        int mobileAgentsAmount = agents.size() - 1;
+        return ("Clock: " + CLOCK + " Alive Agents: " + alive + " Total Agents: " + mobileAgentsAmount);
     }
 
     public void updateStatistics() {
         CLOCK++;
-
     }
 
     public Agent getNeighbor(Agent a, int radius) {
