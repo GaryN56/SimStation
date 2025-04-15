@@ -21,10 +21,17 @@ public abstract class World extends Model {
         a.setYc(Utilities.rng.nextInt(SIZE));
     }
 
-    public void startAgents() {
-        agents.clear();                     // Clear current agents
-        populate();                         // Populate with new agents
+    //Method to reset world when calling start()
+    public void reset() {
+        stopAgents();           // Make sure all threads are stopped
+        agents.clear();         // Clear the current list of agents
+        CLOCK = 0;              // Reset clock to 0
+        alive = 0;              // Reset alive counter to 0
+    }
 
+    public void startAgents() {
+        reset();
+        populate();                         // Populate with new agents
         ObserverAgent o = new ObserverAgent();  // Make a new ObserverAgent
         agents.add(o);    // Add ObserverAgent to keep tabs on world
         o.setWorld(this);
