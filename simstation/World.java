@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public abstract class World extends Model {
-    protected List<Agent> agents = new ArrayList<>();
+    public List<Agent> agents = new ArrayList<>();
     protected static final int SIZE = 500;
+    public static int CLOCK = 0;
     protected int alive = 0;
-    protected int clock = 0;
 
     public void addAgent(Agent a) {
         agents.add(a);
@@ -49,11 +49,11 @@ public abstract class World extends Model {
     public abstract void populate();
 
     public String getStatus() {
-        return ("Clock: " + clock + " Alive Agents: " + alive + " Total Agents: " + agents.size());
+        return ("Clock: " + CLOCK + " Alive Agents: " + alive + " Total Agents: " + agents.size());
     }
 
     public void updateStatistics() {
-        clock++;
+        CLOCK++;
 
     }
 
