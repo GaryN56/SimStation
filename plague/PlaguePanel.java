@@ -10,6 +10,7 @@ import java.awt.*;
 public class PlaguePanel extends WorldPanel implements ChangeListener {
     JPanel sliderPanel = new JPanel();
     JSlider infectedSlider, probabilitySlider, populationSlider, timeSlider;
+    JButton fatalButton;
     public PlaguePanel(WorldFactory factory) {
         super(factory);
 
@@ -116,6 +117,18 @@ public class PlaguePanel extends WorldPanel implements ChangeListener {
         q4.add(timeSlider);
         p4.add(q4, BorderLayout.CENTER);
         sliderPanel.add(p4);
+
+        // Adding fatal button
+        fatalButton = new JButton("Not Fatal");
+        fatalButton.addActionListener( e-> {
+            PlagueSimulation.FATAL = !PlagueSimulation.FATAL;
+            fatalButton.setText(PlagueSimulation.FATAL ? "Fatal" : "Not Fatal");
+                });
+
+        JPanel p5 = new JPanel();
+        p5.setOpaque(false);
+        p5.add(fatalButton);
+        sliderPanel.add(p5);
 
         controlPanel.add(sliderPanel, BorderLayout.CENTER);
     }

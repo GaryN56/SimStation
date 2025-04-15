@@ -16,7 +16,7 @@ public class PlagueFactory extends WorldFactory {
     @Override
     public String[] getEditCommands() {
         return new String[] {"Start", "Stop", "Suspend", "Resume", "Stats", "Initial % Infected",
-        "Infection Probability", "Initial Population Size", "Fatality/Recovery Time"};
+        "Infection Probability", "Initial Population Size", "Fatality/Recovery Time", "Toggle Fatality"};
     }
 
     @Override
@@ -31,6 +31,7 @@ public class PlagueFactory extends WorldFactory {
             case "Infection Probability" -> new ProbabilityCommand(model);
             case "Initial Population Size" -> new InitialPopulationCommand(model);
             case "Fatality/Recovery Time" -> new TimeCommand(model);
+            case "Toggle Fatality" -> new ToggleCommand(model);
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }

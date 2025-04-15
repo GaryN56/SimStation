@@ -4,7 +4,7 @@ import simstation.*;
 
 public class PlagueSimulation extends World {
     public static int VIRULENCE = 50; // % chance of infection
-    public static int RESISTANCE = 2; // % chance of resisting infection
+//    public static int RESISTANCE = 2; // % chance of resisting infection
     public static int POPULATION_SIZE = 50;  // size of population
     public static int INITIAL_INFECTED = 5; // % infected initially
 
@@ -36,6 +36,7 @@ public class PlagueSimulation extends World {
         super.updateStatistics();
         aliveAmount = 0;
         deadAmount = 0;
+        infectedAmount = 0;
         for (Agent a : agents) {
             if (a instanceof Host h) {
                 if (!h.isAlive()) {             //Increment dead counter if agent is dead
@@ -54,8 +55,8 @@ public class PlagueSimulation extends World {
     @Override
     public String getStatus() {
         int mobileAgentsAmount = agents.size() - 1;
-        int percentInfected = infectedAmount / aliveAmount;
-        return "# of Agents" + mobileAgentsAmount + "\n Clock: " + CLOCK + "\n % infected: " + percentInfected
+        double percentInfected = ((double) infectedAmount / aliveAmount) * 100;
+        return "# of Agents: " + mobileAgentsAmount + "\n Clock: " + CLOCK + "\n % infected: " + percentInfected
                 + "\n Alive: " + aliveAmount + "\n Infected: " + infectedAmount + "\n Dead: " + deadAmount;
     }
 }

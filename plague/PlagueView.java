@@ -20,7 +20,7 @@ public class PlagueView extends WorldView {
     }
     public void drawHost(Host h, Graphics gc) {
         if (!h.isAlive()) {
-            gc.setColor(Color.GRAY);
+            gc.setColor(Color.BLACK);
         } else if (h.isInfected()) {
             gc.setColor(Color.RED);
         } else {

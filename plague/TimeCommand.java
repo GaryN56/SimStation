@@ -13,6 +13,7 @@ public class TimeCommand extends Command {
             int value = Integer.parseInt(input);
             if (value < 0 || value > 100) throw new NumberFormatException();
             PlagueSimulation.setInfectionLength(value);
+            model.changed();
         } catch (NumberFormatException e) {
             Utilities.error("Enter number between 0 and 500");
         }
