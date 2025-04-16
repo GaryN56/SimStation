@@ -20,7 +20,9 @@ public class WorldView extends View {
     }
 
     public void drawAgent(Agent a, Graphics gc) {
-        gc.setColor(Color.RED);
-        gc.fillOval(a.xc - 5, a.yc - 5, 10, 10);
+        if (a instanceof MobileAgent) {
+            gc.setColor(Color.RED);
+            gc.fillOval(a.xc - 5, a.yc - 5, 10, 10);
+        }
     }
 }

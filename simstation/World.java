@@ -7,20 +7,35 @@ import java.util.Iterator;
 import java.util.List;
 
 public abstract class World extends Model {
-    protected List<Agent> agents = new ArrayList<>();
-    protected static final int SIZE = 500;
-    protected int alive = 0;
+    public List<Agent> agents = new ArrayList<>();
+    public static final int SIZE = 500;
     public static int CLOCK = 0;
+    public int alive = 0;
+
     public void addAgent(Agent a) {
         agents.add(a);
         alive++;
+
         a.setWorld(this);
         a.setXc(Utilities.rng.nextInt(SIZE));
         a.setYc(Utilities.rng.nextInt(SIZE));
     }
 
+    //Method to reset world when calling start()
+    public void reset() {
+        stopAgents();           // Make sure all threads are stopped
+        agents.clear();         // Clear the current list of agents
+        CLOCK = 0;              // Reset clock to 0
+        alive = 0;              // Reset alive counter to 0
+    }
+
     public void startAgents() {
-        populate();
+        reset();
+        populate();                         // Populate with new agents
+        ObserverAgent o = new ObserverAgent();  // Make a new ObserverAgent
+        agents.add(o);    // Add ObserverAgent to keep tabs on world
+        o.setWorld(this);
+
         for(Agent a : agents) {
             a.start();
         }
@@ -47,7 +62,9 @@ public abstract class World extends Model {
     public abstract void populate();
 
     public String getStatus() {
-        return ("Clock: " + CLOCK + " Alive Agents: " + alive + " Total Agents: " + agents.size());
+        // Subtract ObserverAgent from the amount of total agents
+        int mobileAgentsAmount = agents.size() - 1;
+        return ("Clock: " + CLOCK + " Alive Agents: " + alive + " Total Agents: " + mobileAgentsAmount);
     }
 
     public void updateStatistics() {
@@ -56,7 +73,7 @@ public abstract class World extends Model {
 
     public Agent getNeighbor(Agent a, int radius) {
         for(Agent other : agents) {
-            if((other != a) && (Math.abs(other.getXc() - a.getXc()) < radius || Math.abs(other.getYc() - a.getYc()) < radius)) {
+            if((other != a) && (other instanceof MobileAgent) && (Math.abs(other.getXc() - a.getXc()) < radius || Math.abs(other.getYc() - a.getYc()) < radius)) {
                 return other;
             }
         }
