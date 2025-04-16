@@ -2,14 +2,17 @@ package simstation.prisonersDilemma;
 
 import mvc.AppPanel;
 import simstation.Agent;
+import simstation.ObserverAgent;
 import simstation.World;
 import simstation.WorldPanel;
 
+import java.util.Random;
+
 public class PrisonersDilemma extends World {
-    private double cheaterAvg = 0;
-    private double cooperatorAvg = 0;
-    private double reciprocatorAvg = 0;
-    private double randomAvg = 0;
+    private double cheaterTotal = 0;
+    private double cooperatorTotal = 0;
+    private double reciprocatorTotal = 0;
+    private double randomTotal = 0;
     public void populate() {
         for(int i = 0; i < 10; i++)
             addAgent(new Prisoner(new Cheat()));
@@ -23,21 +26,23 @@ public class PrisonersDilemma extends World {
 
     public String getStatus() {
         return ("#agents " + agents.size()
-                + "clock: " + CLOCK
-                + "Cheater's average: " + cheaterAvg
-                + "Cooperator's average: " + cooperatorAvg
-                + "Reciprocator's average: " + reciprocatorAvg
-                + "Random's average: " + randomAvg);
+                + "\nclock: " + CLOCK
+                + "\nCheater's average: " + cheaterTotal/40.0
+                + "\nCooperator's average: " + cooperatorTotal/40.0
+                + "\nReciprocator's average: " + reciprocatorTotal/40.0
+                + "\nRandom's average: " + randomTotal/40.0);
     }
 
     public void updateStatistics() {
         super.updateStatistics(); // update clock
         for(Agent a : agents) {
-            int fitness = ((Prisoner) a).getFitness();
-            if(((Prisoner) a).getStrategy().equals(new Cheat())) cheaterAvg += fitness / 40.0;
-            if(((Prisoner) a).getStrategy().equals(new Cooperate())) cooperatorAvg += fitness / 40.0;
-            if(((Prisoner) a).getStrategy().equals(new Tit4Tat())) reciprocatorAvg += fitness / 40.0;
-            if(((Prisoner) a).getStrategy().equals(new RandomlyCooperate())) randomAvg += fitness / 40.0;
+            if(a instanceof ObserverAgent) continue;
+            Prisoner p = (Prisoner) a;
+            int fitness = p.getFitness();
+            if(p.getStrategy() instanceof Cheat) cheaterTotal += fitness;
+            if(p.getStrategy() instanceof Cooperate) cooperatorTotal += fitness;
+            if(p.getStrategy() instanceof Tit4Tat) reciprocatorTotal += fitness;
+            if(p.getStrategy() instanceof RandomlyCooperate) randomTotal += fitness;
         }
     }
 
