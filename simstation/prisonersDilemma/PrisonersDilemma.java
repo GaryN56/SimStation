@@ -6,8 +6,6 @@ import simstation.ObserverAgent;
 import simstation.World;
 import simstation.WorldPanel;
 
-import java.util.Random;
-
 public class PrisonersDilemma extends World {
     private double cheaterTotal = 0;
     private double cooperatorTotal = 0;
@@ -24,8 +22,16 @@ public class PrisonersDilemma extends World {
             addAgent(new Prisoner(new Tit4Tat()));
     }
 
+    public void reset() {
+        super.reset();
+        cheaterTotal = 0;
+        cooperatorTotal = 0;
+        reciprocatorTotal = 0;
+        randomTotal = 0;
+    }
+
     public String getStatus() {
-        return ("#agents " + agents.size()
+        return ("#agents " + (agents.size()-1) // subtract observer agent
                 + "\nclock: " + CLOCK
                 + "\nCheater's average: " + cheaterTotal/40.0
                 + "\nCooperator's average: " + cooperatorTotal/40.0

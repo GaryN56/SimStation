@@ -22,24 +22,33 @@ class Prisoner extends MobileAgent {
         int steps = Utilities.rng.nextInt(20) + 1;
         move(steps);
 
-        if(world.getNeighbor(this, 10) != null) {
-            Prisoner partner = (Prisoner) world.getNeighbor(this, 10);
-            if (!partner.cooperate()) partnerCheated = true;
+        Agent neighbor = world.getNeighbor(this, 10);
+        if(neighbor instanceof Prisoner partner) {
+//            if (!partner.cooperate()) partnerCheated = true;
+            boolean p1 = cooperate();
+            boolean p2 = partner.cooperate();
 
-            if(!partnerCheated && !cooperate()) {
-                // partner not cheat, this cheat
+            if(!p1 && p2) {
+                // partner cooperate, this cheat
                 updateFitness(5);
-            } else if(!partnerCheated && cooperate()) {
+            } else if(p1 && !p2) {
+                // partner cheat, this cooperate
+                partner.updateFitness(5);
+            } else if(p1 && p2) {
                 // both cooperate
                 updateFitness(3);
                 partner.updateFitness(3);
-            } else if(partnerCheated && cooperate()) {
-                // partner cheat, this cooperate
-                partner.updateFitness(5);
-            } else if(partnerCheated && !cooperate()) {
+            } else if(!p1 && !p2) {
                 // both cheat
                 updateFitness(1);
                 partner.updateFitness(1);
+            }
+
+            if (strategy instanceof Tit4Tat) {
+                ((Tit4Tat) strategy).updateOpponentCheated(p2);
+            }
+            if (partner.getStrategy() instanceof Tit4Tat) {
+                ((Tit4Tat) partner.getStrategy()).updateOpponentCheated(p1);
             }
         }
     }

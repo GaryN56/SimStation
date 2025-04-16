@@ -72,11 +72,17 @@ public abstract class World extends Model {
     }
 
     public Agent getNeighbor(Agent a, int radius) {
-        for(Agent other : agents) {
-            if((other != a) && (other instanceof MobileAgent) && (Math.abs(other.getXc() - a.getXc()) < radius || Math.abs(other.getYc() - a.getYc()) < radius)) {
-                return other;
+        for (Agent other : agents) {
+            if (other != a && other instanceof MobileAgent) {
+                double dx = other.getXc() - a.getXc();
+                double dy = other.getYc() - a.getYc();
+                double distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < radius) {
+                    return other;
+                }
             }
         }
+
         return null;
     }
 
