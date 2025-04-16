@@ -11,7 +11,6 @@ public abstract class Agent implements Runnable, Serializable {
     protected String agentName;
     transient protected Thread myThread;
 
-
     public void setWorld(World w) {
         this.world = w;
     }
@@ -30,7 +29,7 @@ public abstract class Agent implements Runnable, Serializable {
     public void resume() {
         paused = false;
     }
-    abstract void update(); // override this
+    public abstract void update(); // override this
     protected void onStart() {}
     protected void onInterrupted() {}
     public void onExit() {}
@@ -44,10 +43,8 @@ public abstract class Agent implements Runnable, Serializable {
                 if (!paused) {
                     update();
                     world.changed();
-                    Thread.sleep(20);
-                } else {
-                    Thread.sleep(20);
                 }
+                Thread.sleep(20);
             }
         } catch (InterruptedException e) {
             onInterrupted();
