@@ -39,16 +39,16 @@ public class Cow extends MobileAgent {
             stop();
         }
         Meadow meadow = (Meadow) world;
-        Patch patch = meadow.getPatch(xc, yc);
+        location = meadow.getPatch(xc, yc);
 
-        if (patch.getEnergy() >= GREEDINESS) {         // Patch has enough energy to eat
-            patch.eatMe(this, GREEDINESS);
+        if (location.getEnergy() >= GREEDINESS) {         // Patch has enough energy to eat
+            location.eatMe(this, GREEDINESS);
         } else if (energy >= Meadow.moveEnergy) {     // Patch doesn't have enough energy, Cow has enough energy to move
             energy -= Meadow.moveEnergy;
             heading = Heading.random();
             move(Patch.PATCH_SIZE);
         } else {                                     // Patch and cow have no energy. Cow will wait
-            patch.eatMe(this, GREEDINESS);
+            location.eatMe(this, GREEDINESS);
         }
     }
 }

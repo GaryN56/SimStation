@@ -45,10 +45,10 @@ public class PrisonersDilemma extends World {
     public String getStatus() {
         return ("#agents " + (agents.size()-1) // subtract observer agent
                 + "\nclock: " + CLOCK
-                + "\nCheater's average: " + cheaterTotal/40.0
-                + "\nCooperator's average: " + cooperatorTotal/40.0
-                + "\nReciprocator's average: " + reciprocatorTotal/40.0
-                + "\nRandom's average: " + randomTotal/40.0);
+                + "\nCheater's average: " + cheaterTotal/10.0
+                + "\nCooperator's average: " + cooperatorTotal/10.0
+                + "\nReciprocator's average: " + reciprocatorTotal/10.0
+                + "\nRandom's average: " + randomTotal/10.0);
     }
 
     public void updateStatistics() {

@@ -15,6 +15,11 @@ public class MobileAgent extends Agent {
                 case EAST -> xc = (xc + 1) % World.SIZE;
                 case WEST -> xc = (xc - 1 + World.SIZE) % World.SIZE;
             }
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

@@ -17,7 +17,7 @@ public class PlaguePanel extends WorldPanel implements ChangeListener {
         sliderPanel.setLayout(new GridLayout(6,1));
         sliderPanel.setOpaque(false);
 
-        infectedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 5);
+        infectedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 30);
         infectedSlider.setMinorTickSpacing(1);
         infectedSlider.setMajorTickSpacing(10);
         infectedSlider.setPaintTicks(true);
@@ -39,7 +39,7 @@ public class PlaguePanel extends WorldPanel implements ChangeListener {
         populationSlider.setPaintLabels(true);
         populationSlider.setLabelTable(populationSlider.createStandardLabels(20));
 
-        timeSlider = new JSlider(JSlider.HORIZONTAL, 0, 500, 200);
+        timeSlider = new JSlider(JSlider.HORIZONTAL, 0, 500, 50);
         timeSlider.setPreferredSize(new Dimension(350, 50));
         timeSlider.setMinorTickSpacing(1);
         timeSlider.setMajorTickSpacing(50);
@@ -133,7 +133,6 @@ public class PlaguePanel extends WorldPanel implements ChangeListener {
         controlPanel.add(sliderPanel, BorderLayout.CENTER);
     }
 
-    @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() == infectedSlider) {
             PlagueSimulation.INITIAL_INFECTED = infectedSlider.getValue();
@@ -155,6 +154,7 @@ public class PlaguePanel extends WorldPanel implements ChangeListener {
         probabilitySlider.setValue(((PlagueSimulation) model).VIRULENCE);
         populationSlider.setValue(((PlagueSimulation) model).POPULATION_SIZE);
         timeSlider.setValue(((PlagueSimulation) model).INFECTION_LENGTH);
+        fatalButton.setText(PlagueSimulation.FATAL ? "Fatal" : "Not Fatal");
         repaint();
     }
 

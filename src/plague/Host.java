@@ -26,15 +26,14 @@ public class Host extends MobileAgent {
 
     // If host is infected, it will try to infect its neighbor
     public void infect() {
-        Host partner = (Host) world.getNeighbor(this,10);
-        if (partner != null) {
-            if (this.isInfected() && !partner.isInfected()) {       // If this agent is infected and partner is not infected
-                int luck = Utilities.rng.nextInt(100);       // Get a random integer 0-100
-                if (luck <= PlagueSimulation.VIRULENCE) partner.setInfected(true);
+        Host partner = (Host) world.getNeighbor(this, 20);
+        if (partner != null && !partner.isInfected() && partner.isAlive()) {
+            int luck = Utilities.rng.nextInt(100);
+            if (luck < PlagueSimulation.VIRULENCE) {
+                partner.setInfected(true);
             }
         }
     }
-
 
     @Override
     public void update() {
@@ -44,7 +43,7 @@ public class Host extends MobileAgent {
 
             // Kill or Recover infected host if it's past infection time limit
             if (this.isInfected()) {
-                int time = World.CLOCK - timeInfected;
+                int time = PlagueSimulation.CLOCK - timeInfected;
                 if (time >= PlagueSimulation.INFECTION_LENGTH) {
                     if (PlagueSimulation.FATAL) {
                         this.setDead();
@@ -55,7 +54,7 @@ public class Host extends MobileAgent {
             }
             // Move
             heading = Heading.random();
-            move(3);
+            move(5);
         }
     }
 }

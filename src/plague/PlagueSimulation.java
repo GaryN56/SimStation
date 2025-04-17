@@ -6,10 +6,10 @@ public class PlagueSimulation extends World {
     public static int VIRULENCE = 50; // % chance of infection
 //    public static int RESISTANCE = 2; // % chance of resisting infection
     public static int POPULATION_SIZE = 50;  // size of population
-    public static int INITIAL_INFECTED = 5; // % infected initially
+    public static int INITIAL_INFECTED = 30; // % infected initially
 
     public static boolean FATAL = false;    // if virus is fatal or not
-    public static int INFECTION_LENGTH = 200;    // Length of time to recover or die from virus
+    public static int INFECTION_LENGTH = 50;    // Length of time to recover or die from virus
     public int aliveAmount;
     public int deadAmount;
     public int infectedAmount;
@@ -30,6 +30,7 @@ public class PlagueSimulation extends World {
     public static void setPopulationSize(int input) { POPULATION_SIZE = input; }
 
     public static void setInfectionLength(int input) { INFECTION_LENGTH = input; }
+
 
     @Override
     public void updateStatistics() {
