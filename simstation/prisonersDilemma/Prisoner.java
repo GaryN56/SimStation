@@ -3,14 +3,13 @@ package simstation.prisonersDilemma;
 import mvc.Utilities;
 import simstation.*;
 
-class Prisoner extends MobileAgent {
+public class Prisoner extends MobileAgent {
     private int fitness = 0;
     private boolean partnerCheated = false;
     private Strategy strategy;
 
-    public Prisoner(Strategy strategy) {
+    public Prisoner() {
         super();
-        this.strategy = strategy;
     }
 
     public boolean cooperate() {
@@ -24,7 +23,6 @@ class Prisoner extends MobileAgent {
 
         Agent neighbor = world.getNeighbor(this, 10);
         if(neighbor instanceof Prisoner partner) {
-//            if (!partner.cooperate()) partnerCheated = true;
             boolean p1 = cooperate();
             boolean p2 = partner.cooperate();
 
@@ -44,12 +42,16 @@ class Prisoner extends MobileAgent {
                 partner.updateFitness(1);
             }
 
-            if (strategy instanceof Tit4Tat) {
-                ((Tit4Tat) strategy).updateOpponentCheated(p2);
-            }
-            if (partner.getStrategy() instanceof Tit4Tat) {
-                ((Tit4Tat) partner.getStrategy()).updateOpponentCheated(p1);
-            }
+            if(!p2) partnerCheated = true;
+            if(!p1) partner.partnerCheated = true;
+
+            // above code is better for scalability
+//            if (strategy instanceof Tit4Tat) {
+//                ((Tit4Tat) strategy).updateOpponentCheated(p2);
+//            }
+//            if (partner.getStrategy() instanceof Tit4Tat) {
+//                ((Tit4Tat) partner.getStrategy()).updateOpponentCheated(p1);
+//            }
         }
     }
 
@@ -63,5 +65,13 @@ class Prisoner extends MobileAgent {
 
     public Strategy getStrategy() {
         return strategy;
+    }
+
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean getPartnerCheated() {
+        return partnerCheated;
     }
 }

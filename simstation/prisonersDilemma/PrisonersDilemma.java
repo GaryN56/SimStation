@@ -12,14 +12,26 @@ public class PrisonersDilemma extends World {
     private double reciprocatorTotal = 0;
     private double randomTotal = 0;
     public void populate() {
-        for(int i = 0; i < 10; i++)
-            addAgent(new Prisoner(new Cheat()));
-        for(int i = 0; i < 10; i++)
-            addAgent(new Prisoner(new Cooperate()));
-        for(int i = 0; i < 10; i++)
-            addAgent(new Prisoner(new RandomlyCooperate()));
-        for(int i = 0; i < 10; i++)
-            addAgent(new Prisoner(new Tit4Tat()));
+        for(int i = 0; i < 10; i++) {
+            Prisoner p = new Prisoner();
+            p.setStrategy(new Cheat(p));
+            addAgent(p);
+        }
+        for(int i = 0; i < 10; i++) {
+            Prisoner p = new Prisoner();
+            p.setStrategy(new Cooperate(p));
+            addAgent(p);
+        }
+        for(int i = 0; i < 10; i++) {
+            Prisoner p = new Prisoner();
+            p.setStrategy(new RandomlyCooperate(p));
+            addAgent(p);
+        }
+        for(int i = 0; i < 10; i++) {
+            Prisoner p = new Prisoner();
+            p.setStrategy(new Tit4Tat(p));
+            addAgent(p);
+        }
     }
 
     public void reset() {
