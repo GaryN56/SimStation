@@ -1,4 +1,4 @@
-package simstation.prisonersDilemma;
+package prisonersDilemma;
 
 public class Cooperate extends Strategy {
     public Cooperate(Prisoner myPrisoner) {

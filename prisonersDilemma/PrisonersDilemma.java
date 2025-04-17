@@ -1,4 +1,4 @@
-package simstation.prisonersDilemma;
+package prisonersDilemma;
 
 import mvc.AppPanel;
 import simstation.Agent;

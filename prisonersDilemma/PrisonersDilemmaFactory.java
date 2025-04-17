@@ -1,4 +1,4 @@
-package simstation.prisonersDilemma;
+package prisonersDilemma;
 
 import mvc.Model;
 import simstation.WorldFactory;

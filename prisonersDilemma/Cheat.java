@@ -1,4 +1,4 @@
-package simstation.prisonersDilemma;
+package prisonersDilemma;
 
 public class Cheat extends Strategy {
     public Cheat(Prisoner myPrisoner) {
