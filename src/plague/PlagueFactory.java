@@ -46,5 +46,5 @@ public class PlagueFactory extends WorldFactory {
     }
 
     @Override
-    public String about() { return "Plague 2025. CS151 Group 6";}
+    public String about() { return "Plague 2025. CS151 Group 5";}
 }
